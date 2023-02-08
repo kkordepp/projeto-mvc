@@ -1,0 +1,32 @@
+﻿@model Agenda.Presentation.Models.ContatosRelatorioModel
+
+@{
+    ViewData["Title"] = "Relatorio";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h4>Relatório de contatos</h4>
+        <p>Seleciona o formato do relatório desejado.</p>
+        <hr></hr>
+
+        @using(Html.BeginForm())
+        {
+            <div class="mb-2">
+                    <label>Formato relatório:</label><br>
+                    @Html.RadioButtonFor(model => model.Formato, "pdf") <span>Documento PDF</span>
+                    &nbsp; &nbsp;
+                    @Html.RadioButtonFor(model => model.Formato, "excel") <span>Documento Excel</span>
+            </div>
+
+            <div class="text-danger">
+                @Html.ValidationMessageFor(model => model.Formato)
+            </div>
+
+            <div class="mb-3">
+                <input type="submit" value="Gerar relatório" class="btn btn-success"></input>
+            </div>
+        }
+    </div>
+</div>

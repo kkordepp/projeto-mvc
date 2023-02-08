@@ -1,0 +1,103 @@
+﻿@using Agenda.Presentation.Models
+@using Newtonsoft.Json
+
+@{
+    var json = User.Identity.Name;
+    var auth = JsonConvert.DeserializeObject<AuthenticationModel>(json);
+}
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Agenda de contatos</title>
+    <link rel="stylesheet" href="~/css/bootstrap.css" type="text/css"/>
+
+    @RenderSection("styles", required : false)
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Agenda de contatos</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/Home/Index">Página inicial</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/Usuario/MinhaConta">Minha conta</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Gerenciar contatos
+          </a>
+
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/Contatos/Cadastro">Cadastrar contatos</a></li>
+            <li><a class="dropdown-item" href="/Contatos/Consulta">Consultar contatos</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/Contatos/Relatorio">Relatórios de contatos</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="d-flex">
+          <div class="text-white">
+              <div>@auth.Nome</div>
+              <div style="margin-top: -10px!important;"><small>@auth.Email</small></div>
+          </div>
+          &nbsp;&nbsp;
+          <a href="/Account/Logout" class="btn btn-outline-light"
+            onclick="return confirm('Deseja realmente encerrar sua sessão e sair do sistema?');">
+            Sair da agenda
+        </a>
+      </form>
+    </div>
+  </div>
+</nav>
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+    }
+
+    else if (TempData["MensagemAlerta"] != null)
+    {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Alerta!</strong> @TempData["MensagemAlerta"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+    }
+
+    else if (TempData["MensagemErro"] != null)
+    {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Erro!</strong> @TempData["MensagemErro"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+    }
+
+<div class="container mt-3">
+        @RenderBody()
+</div>
+    <script src="~/js/bootstrap.bundle.js" type="text/javascript"></script>
+
+    @RenderSection("scripts", required : false)
+
+</body>
+</html>
