@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace Agenda.Data.Entities
 {
-    /// <summary>
-    /// classe de modelo de dados para o usuario
-    /// </summary>
     public class Usuario
     {
         #region Propriedades

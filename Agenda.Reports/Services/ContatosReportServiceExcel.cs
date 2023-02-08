@@ -13,10 +13,8 @@ namespace Agenda.Reports.Services
     {
         public byte[] CreateReport(List<Contato> contatos, Usuario usuario)
         {
-            // definindo tipo de liceça para não comercial
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            // criando planilha Excel
             using (var excelPackage = new ExcelPackage())
             {
                 var sheet = excelPackage.Workbook.Worksheets.Add("Contatos");
@@ -52,7 +50,6 @@ namespace Agenda.Reports.Services
 
                 sheet.Cells["A:E"].AutoFitColumns();
 
-                // retornando o arquivo
                 return excelPackage.GetAsByteArray();
             }
         }

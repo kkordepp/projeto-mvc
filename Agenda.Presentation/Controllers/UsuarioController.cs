@@ -9,13 +9,11 @@ namespace Agenda.Presentation.Controllers
     [Authorize]
     public class UsuarioController : Controller
     {
-        // ROTA: /Usuario/MinhaConta
         public IActionResult MinhaConta()
         {
             return View();
         }
 
-        // método POST: /Usuario/MinhaConta (submit do formulário)
         [HttpPost]
         public IActionResult MinhaConta(UsuarioMinhaContaModel model)
         {
@@ -23,11 +21,9 @@ namespace Agenda.Presentation.Controllers
             {
                 try
                 {
-                    // capturando os dados do usuário autenticado pelo cookie
                     var json = User.Identity.Name;
                     var auth = JsonConvert.DeserializeObject<AuthenticationModel>(json);
 
-                    // atualizando a senha do usuário no banco de dados
                     var usuarioRepository = new UsuarioRepository();
                     usuarioRepository.Update(auth.IdUsuario, model.NovaSenha);
 

@@ -3,9 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Agenda.Presentation.Models
 {
-    /// <summary>
-    /// modelo de dados para capturar os campos do formulário de cadastro do usuário
-    /// </summary>
     public class AccountRegisterModel
     {
         [RegularExpression("^[A-Za-zÀ-Üà-ü\\s]{6,150}$",

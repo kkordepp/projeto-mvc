@@ -8,9 +8,6 @@ using System.Threading.Tasks;
 
 namespace Agenda.Messages
 {
-    /// <summary>
-    /// classe para realizar um serviço de envio de email
-    /// </summary>
     public class EmailMessageService
     {
         #region Parâmetros para envio de email

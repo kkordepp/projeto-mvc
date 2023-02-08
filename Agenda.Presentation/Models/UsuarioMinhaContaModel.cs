@@ -3,9 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Agenda.Presentation.Models
 {
-    /// <summary>
-    /// modelo de dados para a página /Usuario/MinhaConta
-    /// </summary>
     public class UsuarioMinhaContaModel
     {
         [PasswordValidator(ErrorMessage = "Informe de 8 a 20 caracteres, com pelo menos uma letra maiúscula, " +

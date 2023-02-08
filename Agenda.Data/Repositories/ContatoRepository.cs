@@ -11,9 +11,6 @@ using System.Threading.Tasks;
 
 namespace Agenda.Data.Repositories
 {
-    /// <summary>
-    /// classe de repositório de dados para contato
-    /// </summary>
     public class ContatoRepository
     {
         public void Create(Contato contato)

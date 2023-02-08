@@ -21,15 +21,12 @@ namespace Agenda.Presentation.Controllers
         [HttpPost]
         public IActionResult Cadastro(ContatosCadastroModel model)
         {
-            // verificar se todos os campos da model passaram nas validações
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // capturando o usuário autenticado no sistema
                     var auth = ObterUsuarioAutenticado();
 
-                    // capturando os dados do contato
                     var contato = new Contato
                     {
                         IdContato = Guid.NewGuid(),
@@ -41,7 +38,6 @@ namespace Agenda.Presentation.Controllers
                         IdUsuario = auth.IdUsuario
                     };
 
-                    // cadastrando no banco de dados
                     var contatoRepository = new ContatoRepository();
                     contatoRepository.Create(contato);
 
@@ -69,10 +65,8 @@ namespace Agenda.Presentation.Controllers
 
             try
             {
-                // obtendo usuário
                 var auth = ObterUsuarioAutenticado();
 
-                // consultar todos os contatos no banco de dados pertencente ao usuário autenticado
                 var contatoRepository = new ContatoRepository();
                 foreach (var item in contatoRepository.GetAllByUsuario(auth.IdUsuario))
                 {
@@ -102,15 +96,11 @@ namespace Agenda.Presentation.Controllers
         {
             try
             {
-                // consultando dados através do id
                 var contatoRepository = new ContatoRepository();
                 var contato = contatoRepository.GetById(id);
 
-                // verificando se o contato foi encontrado e
-                // verificando se o contato pertence ao usuário
                 if (contato != null && contato.IdUsuario == ObterUsuarioAutenticado().IdUsuario)
                 {
-                    // criando uma instância da classe ContatosEdicaoModel
                     var model = new ContatosEdicaoModel
                     {
                         IdContato = contato.IdContato,
@@ -121,7 +111,6 @@ namespace Agenda.Presentation.Controllers
                         Tipo = contato.Tipo.ToString()
                     };
 
-                    // enviando o objeto (model) para a página
                     return View(model);
                 }
 
@@ -143,7 +132,6 @@ namespace Agenda.Presentation.Controllers
         [HttpPost]
         public IActionResult Edicao(ContatosEdicaoModel model)
         {
-            // verificando se todos os campos passaram nas regras de validação
             if (ModelState.IsValid)
             {
                 try
@@ -158,7 +146,6 @@ namespace Agenda.Presentation.Controllers
                         Tipo = int.Parse(model.Tipo)
                     };
 
-                    // atualizando no banco de dados
                     var contatoRepository = new ContatoRepository();
                     contatoRepository.Update(contato);
 
@@ -185,15 +172,11 @@ namespace Agenda.Presentation.Controllers
         {
             try
             {
-                //consultar o contato atraves do ID
                 var contatoRepository = new ContatoRepository();
                 var contato = contatoRepository.GetById(id);
 
-                //verificar se o contato foi encontrado e
-                //verificar se o contato pertence ao usuário autenticado
                 if (contato != null && contato.IdUsuario == ObterUsuarioAutenticado().IdUsuario)
                 {
-                    //excluindo o contato
                     contatoRepository.Delete(contato);
                     TempData["MensagemSucesso"] = $"Contato {contato.Nome}, excluído com sucesso.";
                 }
@@ -219,7 +202,6 @@ namespace Agenda.Presentation.Controllers
         [HttpPost]
         public IActionResult Relatorio(ContatosRelatorioModel model)
         {
-            // verificando se todos os campos passaram nas validações
             if (ModelState.IsValid)
             {
                 try
@@ -243,7 +225,6 @@ namespace Agenda.Presentation.Controllers
                             break;
                     }
 
-                    // capturando usuário autenticado
                     var auth = ObterUsuarioAutenticado();
                     var usuario = new Usuario
                     {
@@ -252,14 +233,11 @@ namespace Agenda.Presentation.Controllers
                         Email = auth.Email
                     };
 
-                    // consultando os contatos no banco de dados
                     var contatoRepository = new ContatoRepository();
                     var contatos = contatoRepository.GetAllByUsuario(usuario.IdUsuario);
 
-                    // gerando arquivo
                     var relatorio = contatosReport.CreateReport(contatos, usuario);
 
-                    // dowload do arquivo
                     return File(relatorio, tipoArquivo, nomeArquivo);
                 }
 
@@ -277,13 +255,10 @@ namespace Agenda.Presentation.Controllers
             return View();
         }
 
-        // método auxiliar para retornar os dados do usuário autenticado
         private AuthenticationModel ObterUsuarioAutenticado()
         {
-            // lê os dados contidos no Cookie (JSON)
             var json = User.Identity.Name;
 
-            // deserializa o JSON e retorna o objeto
             return JsonConvert.DeserializeObject<AuthenticationModel>(json);
         }
     }

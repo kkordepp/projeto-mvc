@@ -2,9 +2,6 @@
 
 namespace Agenda.Presentation.Models
 {
-    /// <summary>
-    /// modelo de dados para a página de edição de contatos
-    /// </summary>
     public class ContatosEdicaoModel
     {
         [Required]

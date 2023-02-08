@@ -13,33 +13,28 @@ namespace Agenda.Presentation.Controllers
 {
     public class AccountController : Controller
     {
-        // Rota para: /Account/Login
         public IActionResult Login()
         {
-            return View(); // acessa a página
+            return View();
         }
 
-        [HttpPost] // Recebe o SUBMIT do formulário
+        [HttpPost]
         public IActionResult Login(AccountLoginModel model)
         {
-            // verificar se a model não tem erro de validação
             if (ModelState.IsValid)
             {
                 try
                 {
                     var usuarioRepository = new UsuarioRepository();
 
-                    // consultando usuário no banco de dados através do email e senha
                     var usuario = usuarioRepository.GetByEmailAndSenha(model.Email, model.Senha);
 
-                    // verificando se o usuário não foi encontrado
                     if (usuario == null)
                     {
                         TempData["Mensagem"] = "Acesso negado";
                     }
                     else
                     {
-                        // realizando a autenticação do usuário
                         var authenticationModel = new AuthenticationModel
                         {
                             IdUsuario = usuario.IdUsuario,
@@ -48,18 +43,14 @@ namespace Agenda.Presentation.Controllers
                             DataHoraAcesso = DateTime.Now
                         };
 
-                        // transformando os dados do usuário em JSON para gravar no Cookie
                         var json = JsonConvert.SerializeObject(authenticationModel);
 
-                        // gerando o cookie de autenticação
                         var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, json) },
                             CookieAuthenticationDefaults.AuthenticationScheme);
 
-                        // gravando cookie
                         var principal = new ClaimsPrincipal(identity);
                         HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                        // redirecionando para a página: /Home/Index
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -68,19 +59,17 @@ namespace Agenda.Presentation.Controllers
                     TempData["Mensagem"] = $"Erro: {e.Message}";
                 }
             }
-            return View(); // acessa a página
+            return View();
         }
 
-        // Rota para: /Account/Register
         public IActionResult Register()
         {
-            return View(); // acessa a página
+            return View();
         }
 
-        [HttpPost] // Recebe o SUBMIT do formulário
+        [HttpPost]
         public IActionResult Register(AccountRegisterModel model)
         {
-            // verificando se a model não tem erro de validação
             if (ModelState.IsValid)
             {
                 try
@@ -105,7 +94,7 @@ namespace Agenda.Presentation.Controllers
                         usuarioRepository.Create(usuario);
 
                         TempData["Mensagem"] = $"Parabéns {usuario.Nome}, sua conta foi criada com sucesso!";
-                        ModelState.Clear(); // limpando formulário
+                        ModelState.Clear();
                     }
                 }
                 catch (Exception e)
@@ -114,13 +103,12 @@ namespace Agenda.Presentation.Controllers
                 }
             }
 
-            return View(); // acessa a página
+            return View();
         }
 
-        // Rota para: /Account/Password
         public IActionResult Password()
         {
-            return View(); // acessa a página
+            return View();
         }
 
         [HttpPost]
@@ -130,7 +118,6 @@ namespace Agenda.Presentation.Controllers
             {
                 try
                 {
-                    // pesquisando o usuário no banco de dados por email
                     var usuarioRepository = new UsuarioRepository();
                     var usuario = usuarioRepository.GetByEmail(model.Email);
 
@@ -185,13 +172,10 @@ namespace Agenda.Presentation.Controllers
             return View();
         }
 
-        // ROTA: /Account/Logout
         public IActionResult Logout()
         {
-            // apagando cookie de autenticação
             HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            // redirecioando para a página de login
             return RedirectToAction("Login", "Account");
         }
     }

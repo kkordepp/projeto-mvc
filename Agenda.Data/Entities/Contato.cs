@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace Agenda.Data.Entities
 {
-    /// <summary>
-    /// classe de modelo de dados para contatos
-    /// </summary>
     public class Contato
     {
         #region Propriedades

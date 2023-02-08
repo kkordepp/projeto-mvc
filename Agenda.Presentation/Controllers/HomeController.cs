@@ -9,21 +9,17 @@ namespace Agenda.Presentation.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        // ROTA: Home/Index
         public IActionResult Index()
         {
             var lista = new List<DashboardModel>();
 
             try
             {
-                // capturando usuario autenticado mo sistema (cookie)
                 var usuario = JsonConvert.DeserializeObject<AuthenticationModel>(User.Identity.Name);
 
-                // pegando todos os contatos cadastrados desse usuário no banco de dados
                 var contatoRepository = new ContatoRepository();
                 var contatos = contatoRepository.GetAllByUsuario(usuario.IdUsuario);
 
-                // totalizando os dados que serão exibidos no dashboard
                 var totalAmigos = 0;
                 var totalFamilia = 0;
                 var totalTrabalho = 0;

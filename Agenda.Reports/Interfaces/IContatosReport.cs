@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 
 namespace Agenda.Reports.Interfaces
 {
-    /// <summary>
-    /// interface para padronizar os métodos para geração de relatórios de contatos
-    /// </summary>
     public interface IContatosReport
     {
         byte[] CreateReport(List<Contato> contatos, Usuario usuario);

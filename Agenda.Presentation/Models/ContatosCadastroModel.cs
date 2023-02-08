@@ -2,9 +2,6 @@
 
 namespace Agenda.Presentation.Models
 {
-    /// <summary>
-    /// modelo de dados para a página de cadastro de contatos
-    /// </summary>
     public class ContatosCadastroModel
     {
         [MaxLength(150, ErrorMessage = "Por favor, informe no máximo {1} caracteres.")]

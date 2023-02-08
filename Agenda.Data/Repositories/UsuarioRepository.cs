@@ -10,14 +10,8 @@ using System.Threading.Tasks;
 
 namespace Agenda.Data.Repositories
 {
-    /// <summary>
-    /// classe de repositório de dados para o usuário
-    /// </summary>
     public class UsuarioRepository
     {
-        /// <summary>
-        /// método para inserir um usuário no banco de dados
-        /// </summary>
         public void Create(Usuario usuario)
         {
             var query = @"
@@ -35,9 +29,6 @@ namespace Agenda.Data.Repositories
 
         }
 
-        /// <summary>
-        /// método para alterar a senha do usuário
-        /// </summary>
         public void Update(Guid idUsuario, string novaSenha)
         {
             var query = @"
@@ -51,9 +42,6 @@ namespace Agenda.Data.Repositories
             }
         }
 
-        /// <summary>
-        /// método para consultar um usuário baseado em seu email
-        /// </summary>
         public Usuario? GetByEmail(string email)
         {
             var query = @"
@@ -66,9 +54,6 @@ namespace Agenda.Data.Repositories
             }
         }
 
-        /// <summary>
-        /// método para consuktar um usuário baseado em seu email e senha
-        /// </summary>
         public Usuario? GetByEmailAndSenha(string email, string senha)
         {
             var query = @"

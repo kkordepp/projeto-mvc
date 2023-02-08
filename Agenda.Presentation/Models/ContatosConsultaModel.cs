@@ -1,8 +1,5 @@
 ﻿namespace Agenda.Presentation.Models
 {
-    /// <summary>
-    /// modelo de dados para a página de consulta de contatos
-    /// </summary>
     public class ContatosConsultaModel
     {
         public Guid IdContato { get; set; }

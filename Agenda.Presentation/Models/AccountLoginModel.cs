@@ -3,9 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Agenda.Presentation.Models
 {
-    /// <summary>
-    /// modelo de dados para a view de login
-    /// </summary>
     public class AccountLoginModel
     {
         [EmailAddress(ErrorMessage = "Por favor, informe um endereço de email válido.")]
